@@ -16,6 +16,10 @@
             android:name=".VerificationActivity"
             android:exported="false"
             tools:ignore="Instantiatable" />
+        <activity
+            android:name=".MainAfterLogin"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
