@@ -13,11 +13,71 @@
         android:theme="@style/Theme.ТвойПомощник"
         tools:targetApi="31">
         <activity
-            android:name=".VerificationActivity"
+            android:name=".AccountDeletedActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".CohialActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".DeletedChatActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".DeletedRaspisanie"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".DonatActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".MainActivity"
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
             android:name=".MainAfterLogin"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".NewRaspisanieActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".ProfilChatActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".ProfilToUserActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".RaspisanieActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".RegistrationActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".RenamePaspisanie"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".SettingsToAccountRenameActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".VerificationActivity"
             android:exported="false"
             tools:ignore="Instantiatable" />
         <intent-filter>
