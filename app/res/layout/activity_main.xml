@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:orientation="vertical"
     android:background="@color/testFon"
     tools:context=".MainActivity">
 
@@ -56,14 +57,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneNumberInput" />
 
-    <Button
-        android:id="@+id/vkLoginButton"
-        android:layout_width="370dp"
-        android:layout_height="40dp"
+    <ImageView
+        android:id="@+id/loginIcon1"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Войти через VK"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/VK"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toStartOf="@+id/loginIcon2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/continueButton"
+        android:layout_marginEnd="8dp"/>
+
+
+    <ImageView
+        android:id="@+id/loginIcon2"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/Яндекс"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toStartOf="@+id/loginIcon3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/loginIcon1"
+        app:layout_constraintTop_toBottomOf="@+id/continueButton"
+        android:layout_marginEnd="8dp"/>
+
+    <ImageView
+        android:id="@+id/loginIcon3"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ГосУслуги"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/loginIcon2"
         app:layout_constraintTop_toBottomOf="@+id/continueButton" />
 
     <TextView
@@ -78,7 +113,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vkLoginButton"
         app:layout_constraintVertical_bias="0.946" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
