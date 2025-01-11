@@ -149,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/TextFon"
-            android:text="Человек с дименцией" />
+            android:text="Человек с деменцией" />
 
     </RadioGroup>
     <CheckBox
