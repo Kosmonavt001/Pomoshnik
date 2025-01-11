@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/testFon"
+    tools:context=".RegistrationActivity">
+
+    <TextView
+        android:id="@+id/headerText"
+        android:layout_width="378dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="Ого! Новенький! 😳"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/phoneInstruction"
+        android:layout_width="378dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:text="Введите данные о вас чтобы продолжить 😉"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
+    <TextView
+        android:id="@+id/phoneInstruction2"
+        android:layout_width="378dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Ваше имя:"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
+
+    <EditText
+        android:layout_width="364dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/background_button"
+        android:hint="Иван"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:maxLength="12"
+        android:padding="8dp"
+        android:textColorHint="@color/TextFon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneInstruction2" />
+
+    <TextView
+        android:id="@+id/phoneInstruction23"
+        android:layout_width="378dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Ваша фамилия:"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeText" />
+    <EditText
+        android:layout_width="364dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/background_button"
+        android:hint="Иванов"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:maxLength="12"
+        android:padding="8dp"
+        android:textColorHint="@color/TextFon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneInstruction23" />
+
+    <TextView
+        android:id="@+id/phoneInstruction2346"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Ваша дата рождения (ДД.ММ.ГГГГ):"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/birthDateInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/background_button"
+        android:hint="04.05.2010"
+        android:inputType="date"
+        android:padding="8dp"
+        android:textColorHint="@color/TextFon" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Выберите кем вы являетесь:"
+        android:textColor="@color/white" />
+
+    <RadioGroup
+        android:id="@+id/userCategoryRadioGroup"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/volunteerRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/TextFon"
+            android:text="Волонтер / Родственник" />
+
+        <RadioButton
+            android:id="@+id/lowVisionRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/TextFon"
+            android:text="Слабовидящий / Незрячий" />
+
+        <RadioButton
+            android:id="@+id/deafRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/TextFon"
+            android:text="Глухой / Слабослышащий" />
+
+        <RadioButton
+            android:id="@+id/pensionerRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/TextFon"
+            android:text="Пенсионер / Одинокий" />
+
+        <RadioButton
+            android:id="@+id/dementiaRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/TextFon"
+            android:text="Человек с дименцией" />
+
+    </RadioGroup>
+    <CheckBox
+        android:id="@+id/privacyPolicyCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Я согласен(а) с обработкой персональных данных" />
+
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="Продолжить" />
+
+</LinearLayout>
