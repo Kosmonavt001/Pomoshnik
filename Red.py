@@ -43,7 +43,7 @@ def main_loop():
                 send_command(ser, 10, 0)
             elif user_input == '2':
                 # Команда на плату 4, вход 9
-                send_command(ser, 4, 9)
+                send_command(ser, 11, 9)
             elif user_input.lower() == 'exit':
                 break
             else:
