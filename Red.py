@@ -1,60 +1,44 @@
 import serial
 import time
 
-# Настройка COM-порта
-COM_PORT = "COM3"
-BAUD_RATE = 115200
+# Функция для отправки запроса на плату
+def send_request(ser, board, input):
+    request = f"{board} {input}\n"  # Формируем запрос
+    ser.write(request.encode())  # Отправляем запрос
+    print(f"Отправлен запрос на плату {board}, вход {input}")
 
-def init_serial():
-    try:
-        ser = serial.Serial(
-            port=COM_PORT,
-            baudrate=BAUD_RATE,
-            timeout=1,
-            write_timeout=1
-        )
-        print("COM-порт успешно открыт")
-        return ser
-    except serial.SerialException as e:
-        print(f"Ошибка открытия COM-порта: {e}")
-        return None
-
-def send_command(ser, board: int, output: int) -> bool:
-    try:
-        command = f"{board}:{output:02d}\r\n".encode('ascii')
-        ser.write(command)
-        ser.flush()
-        print(f"Отправлено: {board}:{output:02d}")
-        return True
-    except serial.SerialException as e:
-        print(f"Ошибка отправки команды: {e}")
-        return False
-
-def main_loop():
-    ser = init_serial()
-    if not ser:
-        return
+# Основная функция
+def main():
+    # Настройка COM-порта
+    port = 'COM3'
+    baudrate = 115200
+    ser = serial.Serial(port, baudrate, timeout=1)
+    time.sleep(2)  # Ожидание инициализации порта
 
     try:
         while True:
-            user_input = input("Введите '1' для команды на плату 10 вход 0, '2' для платы 4 вход 9 или 'exit' для выхода: ")
-            if user_input == '1':
-                # Команда на плату 10, вход 0
-                send_command(ser, 10, 0)
-            elif user_input == '2':
-                # Команда на плату 4, вход 9
-                send_command(ser, 11, 9)
-            elif user_input.lower() == 'exit':
-                break
-            else:
-                print("Неверный ввод, попробуйте еще раз.")
+            # Выбор платы и входа
+            board = input("Введите номер платы (10 или 4): ")
+            input_num = input("Введите номер входа (0 для платы 10, 9 для платы 4): ")
+
+            # Проверка корректности ввода
+            if board not in ['10', '4']:
+                print("Ошибка: Некорректный номер платы. Допустимые значения: 10, 4.")
+                continue
+            if (board == '10' and input_num != '0') or (board == '4' and input_num != '9'):
+                print("Ошибка: Некорректный номер входа для выбранной платы.")
+                continue
+
+            # Отправка запроса
+            send_request(ser, board, input_num)
+
+            # Пауза перед следующим запросом
             time.sleep(1)
 
     except KeyboardInterrupt:
-        print("Работа прервана пользователем")
+        print("Программа завершена.")
     finally:
-        ser.close()
-        print("COM-порт закрыт.")
+        ser.close()  # Закрытие COM-порта
 
 if __name__ == "__main__":
-    main_loop()
+    main()
