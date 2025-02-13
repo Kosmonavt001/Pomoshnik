@@ -13,7 +13,7 @@ def send_post_request():
 
     try:
         response = requests.post(url, json=data, timeout=10)
-        response.raise_for_status()  # Вызывает ошибку для кодов ответа 4xx/5xx
+        response.raise_for_status()  # Проверяем код ответа
         return response.text
     except requests.RequestException as e:
         logging.error(f"Ошибка при отправке POST-запроса: {e}")
@@ -22,7 +22,12 @@ def send_post_request():
 def control_door(client, board, input, value):
     address = input 
     try:
-        client.write_register(address, value, unit=board)
+        logging.info(f"Попытка записи {value} в адрес {address} на плате {board}.")
+        result = client.write_register(address, value, unit=board)
+        if not result.isError():  # Проверка на ошибки
+            logging.info(f"Успешно записано: {value} на адрес {address} на плате {board}.")
+        else:
+            logging.error(f"Ошибка записи: {result}")
     except Exception as e:
         logging.error(f"Ошибка при управлении дверцей: {e}")
 
