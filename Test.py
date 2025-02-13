@@ -1,75 +1,50 @@
 import requests
 import time
-import configparser
-import serial
-import os
-import logging
+from pymodbus.client import ModbusSerialClient
+import threading
 
+def send_post_request():
+    url = "https://пост-автоматика.рф/api/postomat/ApiGetInfo.php" 
+    data = {"postomat_id": 1000000001}
+    response = requests.post(url, json=data)
+    return response.text
 
-logging.basicConfig(filename='postamat.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+def control_door(client, board, input, value):
+    address = input 
+    client.write_register(address, value, unit=board)
 
-config = configparser.ConfigParser()
-config.read('configuration.bin')
-com_port = config.get('DEFAULT', 'com_port')
-api_url = "https://пост-автоматика.рф/api/Get.php"
-data = {
-    "postomat_id":"1000000001"
-}
-try:
-    report_url = "https://пост-автоматика.рф/api/postomat/Reported.php"
-except configparser.NoOptionError:
-    report_url = None
+def handle_connection():
+    client = ModbusSerialClient(port='COM3', baudrate=115200, timeout=1)
+    if not client.connect():
+        print("Ошибка подключения к Modbus-клиенту.")
+        return
+    while True:
+        response = send_post_request()
+        print(f"Ответ от сервера: {response}")
+        try:
+            response_number = int(response)
+            board = response_number // 10
+            input = response_number % 10
+            control_door(client, board, input, 1)
+            print(f"Дверца открыта на плате {board}, вход {input}.")
+            url = "https://пост-автоматика.рф/api/postomat/postomat/CloseAPI.php" 
+            data = {"id_towar": str(response_number)}
+            requests.post(url, json=data)
+            time.sleep(180)
+            control_door(client, board, input, 0)
+            print(f"Дверца закрыта на плате {board}, вход {input}.")
+        except ValueError:
+            print("Ошибка обработки ответа от сервера. Не удалось преобразовать в число.")
+        time.sleep(10)
 
+def main():
+    threads = []
+    for _ in range(2): 
+        thread = threading.Thread(target=handle_connection)
+        threads.append(thread)
+        thread.start()
+    for thread in threads:
+        thread.join()
 
-def open_cell(cell_code):
-    try:
-        ser = serial.Serial(com_port, 115200, timeout=1)
-        board_number = cell_code // 10
-        output_number = cell_code % 10
-        command = f"{board_number}:{output_number}\r\n".encode('ascii')
-        ser.write(command)
-        response = ser.readline().decode('ascii', errors='ignore').strip()
-        ser.close()
-        logging.info(f"Отправлена команда: {command.decode().strip()}, ответ: {response}")
-        print(f"Отправлена команда: {command.decode().strip()}, ответ: {response}")
-    except serial.SerialException as e:
-        logging.error(f"Ошибка COM-порта: {e}")
-        print(f"Ошибка COM-порта: {e}")
-
-
-while True:
-    try:
-        response = requests.post(api_url, data=data)
-        response.raise_for_status()
-        data = response.json()
-
-        if 'cell_code' in data:
-            cell_code = data['cell_code']
-            if 10 <= cell_code <= 209:
-                logging.info(f"Получено значение cell_code из API: {cell_code}")
-                print(f"Получено значение cell_code из API: {cell_code}")
-                open_cell(cell_code)
-                if report_url:
-                    try:
-                        report_data = {"cell_code": cell_code, "status": "opened"}
-                        report_response = requests.post(report_url, json=report_data)
-                        report_response.raise_for_status()
-                        logging.info(f"Отчет об открытии ячейки {cell_code} отправлен.")
-                        print(f"Отчет об открытии ячейки {cell_code} отправлен.")
-                    except requests.exceptions.RequestException as e:
-                        logging.error(f"Ошибка отправки отчета: {e}")
-                        print(f"Ошибка отправки отчета: {e}")
-
-
-            else:
-                logging.warning(f"Получено некорректное значение cell_code: {cell_code}")
-                print(f"Получено некорректное значение cell_code: {cell_code}")
-
-    except requests.exceptions.RequestException as e:
-        logging.error(f"Ошибка API запроса: {e}")
-        print(f"Ошибка API запроса: {e}")
-    except (KeyError, ValueError) as e:
-        logging.error(f"Ошибка обработки ответа API: {e}")
-        print(f"Ошибка обработки ответа API: {e}")
-
-    time.sleep(1)
+if __name__ == "__main__":
+    main()
