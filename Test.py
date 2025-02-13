@@ -36,14 +36,18 @@ def handle_connection():
 
     while True:
         try:
+            # Подключаемся к модбас-клиенту
             if not client.connect():
                 logging.error("Ошибка подключения к Modbus-клиенту.")
-                time.sleep(5)  # Ожидание перед повторным подключением
+                time.sleep(5)  # Ожидание перед новой попыткой подключения
                 continue
 
+            # Отправляем API-запрос
             response = send_post_request()
 
             if response is None:
+                logging.error("Не удалось получить ответ от API. Попробуем снова.")
+                client.close()  # Закрываем соединение перед повторной попыткой
                 time.sleep(10)  # Ожидание перед повторной попыткой
                 continue
 
@@ -52,14 +56,19 @@ def handle_connection():
                 response_number = int(response)
                 board = response_number // 10
                 input = response_number % 10
+
+                # Открываем дверцу
                 control_door(client, board, input, 1)
                 logging.info(f"Дверца открыта на плате {board}, вход {input}.")
 
+                # Отправляем запрос для закрытия дверцы
                 close_url = "https://пост-автоматика.рф/api/postomat/CloseAPI.php"
                 data = {"id_towar": str(response_number)}
                 requests.post(close_url, json=data, timeout=10)
 
                 time.sleep(180)  # Ожидание 3 минуты
+
+                # Закрываем дверцу
                 control_door(client, board, input, 0)
                 logging.info(f"Дверца закрыта на плате {board}, вход {input}.")
 
